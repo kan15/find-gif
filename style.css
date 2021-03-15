@@ -1,4 +1,4 @@
-#listImages {
+.list-image {
   display: flex;
 }
 .image-wrap {
@@ -14,4 +14,103 @@
 }
 .label-input {
   display: block;
+}
+
+/*---------SPINNER---------*/
+@keyframes spinner-arrows {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.spinner-arrows div {
+  left: 82.65px;
+  top: 37.41px;
+  position: absolute;
+  animation: spinner-arrows linear 0.8928571428571428s infinite;
+  background: #7e8c75;
+  width: 8.7px;
+  height: 29.58px;
+  border-radius: 4.35px / 13.0152px;
+  transform-origin: 4.35px 49.589999999999996px;
+}
+.spinner-arrows div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -0.8184523809523808s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(2) {
+  transform: rotate(30deg);
+  animation-delay: -0.744047619047619s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(3) {
+  transform: rotate(60deg);
+  animation-delay: -0.6696428571428571s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(4) {
+  transform: rotate(90deg);
+  animation-delay: -0.5952380952380952s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(5) {
+  transform: rotate(120deg);
+  animation-delay: -0.5208333333333333s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(6) {
+  transform: rotate(150deg);
+  animation-delay: -0.4464285714285714s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(7) {
+  transform: rotate(180deg);
+  animation-delay: -0.3720238095238095s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(8) {
+  transform: rotate(210deg);
+  animation-delay: -0.2976190476190476s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(9) {
+  transform: rotate(240deg);
+  animation-delay: -0.2232142857142857s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(10) {
+  transform: rotate(270deg);
+  animation-delay: -0.1488095238095238s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(11) {
+  transform: rotate(300deg);
+  animation-delay: -0.0744047619047619s;
+  background: #7e8c75;
+}
+.spinner-arrows div:nth-child(12) {
+  transform: rotate(330deg);
+  animation-delay: 0s;
+  background: #7e8c75;
+}
+.spinner {
+  width: 174px;
+  height: 174px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+.spinner-arrows {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+}
+.spinner-arrows div {
+  box-sizing: content-box;
 }
