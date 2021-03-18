@@ -1,52 +1,68 @@
 
-const numberElements = 5;
+const GIPHY_URL = 'https://api.giphy.com/v1/stickers/search?'; 
+const API_KEY = 'E26iZ0BIEszi7RA4GeEmXzJPRpkSeQ6m';
 
-const getImageShell = () => {
+const getImageClone = () => {
   const imgWrap = document.querySelector('.wrap-for-copy').cloneNode(true);
   document.querySelector('.wrap-for-copy').remove();
   imgWrap.classList.remove('wrap-for-copy');
   return imgWrap;
 }
 
-const imgForCopy = getImageShell();
+const imgForCopy = getImageClone();
 
-const replaceImage = (serverArray, neededImg) => {
-  document.querySelector('.spinner').style.display = "none";
-  const array = [...serverArray]; //if I will need to add images on the screen I will need the full array
-  const needGifArr = array.slice(0, neededImg);
-  for (let i = 1; i <= neededImg; i++) {
+const showPosts = (serverArray) => {
+  const allImgFragment = document.createDocumentFragment();
+  for (let i = 0; i < serverArray.length; i++) {
     const newImg = imgForCopy.cloneNode(true);
-    document.getElementById('listImages').appendChild(newImg);
-
+    newImg.querySelector('img').src = serverArray[i].images.original.url;
+    allImgFragment.appendChild(newImg);
   }
-  const arrForChange = document.querySelectorAll('.image-wrap img');
-  for (let i = 0; i < arrForChange.length; i++) {
-    arrForChange[i].src = needGifArr[i].images.original.url;
-  }
+  document.getElementById('listImages').appendChild(allImgFragment);
 }
 
-const start = async(userWord) => {
-  const GIPHY_URL = 'https://api.giphy.com/v1/stickers/search?'; 
-  const API_KEY = 'E26iZ0BIEszi7RA4GeEmXzJPRpkSeQ6m';
-
+const getFetchPostsUrl = (userWord) => {
   const searchParams = new URLSearchParams();
   searchParams.append('api_key', API_KEY);
   searchParams.append('q', userWord);
+  searchParams.append('limit', 5);
   const url = GIPHY_URL + searchParams;
+  return url;
+}
 
-  const response = await fetch(url);
+const cleanList = () => {
+  document.getElementById('findInput').value = '';
+  document.getElementById('listImages').innerHTML = '';
+}
+
+async function fetchPosts(userWord) {
+  const response = await fetch(getFetchPostsUrl(userWord));
   if (response.ok) {
     const json = await response.json();
-    replaceImage(json.data, numberElements);
+    cleanList();
+    return [...json.data];
   } else {
     alert("ERROR HTTP: " + response.status);
   }
 }
 
+const startSpinner = () => {
+  document.querySelector('.spinner-wrap').style.display = "block";
+}
+
+const stopSpinner = () => {
+  document.querySelector('.spinner-wrap').style.display = "none";
+}
+
+const getUserWord = () => {
+  const userWord = document.getElementById('findInput').value.trim();
+  return userWord;
+}
+
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
-  const userWord = document.getElementById('findInput').value.trim();
-  start(userWord);
-  document.getElementById('findInput').value = '';
-  document.getElementById('listImages').innerHTML = '';
+  startSpinner();
+  const userWord = getUserWord();
+  stopSpinner();
+  fetchPosts(userWord).then(showPosts)
 })
